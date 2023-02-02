@@ -57,6 +57,8 @@ namespace platformGame
         {
             Rectangle playerRect = JsonParser.GetRectangle(fileName, "player");
             player = new Player(playerRect);
+            //player = new Player(Content.Load<Texture2D>("player"), new Vector2(50, 50));
+
 
             List<Rectangle> platformsRect = JsonParser.GetRectangleList(fileName, "platforms");
             foreach (Rectangle r in platformsRect)
