@@ -19,7 +19,7 @@ namespace platformGame
 
 
 
-        public void Draw(SpriteBatch sb)
+        public override void Draw(SpriteBatch sb)
         {
             sb.Draw(tex, size, Color.White);
         }

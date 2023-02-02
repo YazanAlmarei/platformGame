@@ -18,14 +18,14 @@ namespace platformGame
         List<Enemy> enemyList;
         Player player;
         Texture2D backgroundTex;
-
+        Platform platforms;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            graphics.PreferredBackBufferHeight = 500;
+            graphics.PreferredBackBufferHeight = 460;
             graphics.PreferredBackBufferWidth = 600;
 
         }
@@ -43,7 +43,6 @@ namespace platformGame
             platfromList = new List<Platform>();
             enemyList = new List<Enemy>();
             player = null;
-            //Texture2D backgroundTex = Content.Load<Texture2D>("background");
             backgroundTex = Content.Load<Texture2D>("background");
 
             Assests.LoadTextures(Content);
@@ -57,12 +56,11 @@ namespace platformGame
         {
             Rectangle playerRect = JsonParser.GetRectangle(fileName, "player");
             player = new Player(playerRect);
-            //player = new Player(Content.Load<Texture2D>("player"), new Vector2(50, 50));
-
 
             List<Rectangle> platformsRect = JsonParser.GetRectangleList(fileName, "platforms");
             foreach (Rectangle r in platformsRect)
             {
+                
                 Platform p = new Platform(r);
                 platfromList.Add(p);
 
@@ -84,7 +82,12 @@ namespace platformGame
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            KeyMouseReader.Update();
 
+           
+
+
+            player.Update(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);

@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace platformGame
 {
-    internal class GameObjects
+    abstract class GameObjects
     {
         protected Rectangle size;
         protected Texture2D tex;
@@ -26,6 +26,8 @@ namespace platformGame
             size = rect;
             
         }
+
+        public abstract void Draw(SpriteBatch spriteBatch);
 
 
     }

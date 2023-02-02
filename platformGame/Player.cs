@@ -13,12 +13,15 @@ namespace platformGame
         Vector2 position;
         Vector2 velocity;
         bool hasJumped;
-
+        
 
         public Player (Rectangle rect) : base (rect)
         {
             tex = Assests.playerTex;  
             hasJumped = true;
+            velocity = new Vector2(0, 0);
+            position = new Vector2(rect.X, rect.Y);      
+
         }
         
         
@@ -27,8 +30,8 @@ namespace platformGame
         {
             position += velocity;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Right)) velocity.X = 3f;
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left)) velocity.X = -3f; else velocity.X = 0f;
+            if (KeyMouseReader.KeyPressed(Keys.Right)) velocity.X = 1f;
+            else if (KeyMouseReader.KeyPressed(Keys.Left)) velocity.X = -1f; //else velocity.X = 1f;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
             {
@@ -48,13 +51,17 @@ namespace platformGame
 
             if (hasJumped == false)
                 velocity.Y = 0f;
+            
+            
+            
 
         }
 
 
-        public void Draw (SpriteBatch sb)
+        public override void Draw (SpriteBatch sb)
         {
-            sb.Draw(tex, size, Color.White);
+
+            sb.Draw(tex, position, Color.White);
         }
     }
 }

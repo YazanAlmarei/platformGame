@@ -7,17 +7,19 @@ namespace platformGame
 {
     internal class Platform : GameObjects
     {
+
+
         public Platform(Rectangle rect) : base(rect)
         {
             tex = Assests.platoformTex;
+
         }
 
 
-        public void Draw(SpriteBatch sb)
+        public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, size, Color.White);
+            sb.Draw(tex, Size, Color.White);
         }
-
 
 
     }
