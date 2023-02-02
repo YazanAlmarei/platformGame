@@ -10,6 +10,7 @@ namespace platformGame
     {
         protected Rectangle size;
         protected Texture2D tex;
+        
        
       
 
@@ -21,11 +22,15 @@ namespace platformGame
         
 
 
+
+
         public GameObjects(Rectangle rect)
         {
             size = rect;
             
         }
+
+        
 
         public abstract void Draw(SpriteBatch spriteBatch);
 

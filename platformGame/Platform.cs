@@ -8,11 +8,11 @@ namespace platformGame
     internal class Platform : GameObjects
     {
 
-
+        public Rectangle tileRect;
         public Platform(Rectangle rect) : base(rect)
         {
             tex = Assests.platoformTex;
-
+            tileRect = new Rectangle (0 , 0, tex.Width, tex.Height);
         }
 
 

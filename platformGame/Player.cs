@@ -11,8 +11,8 @@ namespace platformGame
     {
         
         Vector2 position;
-        Vector2 velocity;
-        bool hasJumped;
+        public Vector2 velocity;
+        public bool hasJumped;
         
 
         public Player (Rectangle rect) : base (rect)
@@ -26,12 +26,12 @@ namespace platformGame
         
         
 
-        public void Update(GameTime gametime)
+        public void Update(GameTime gametTime)
         {
             position += velocity;
 
-            if (KeyMouseReader.KeyPressed(Keys.Right)) velocity.X = 1f;
-            else if (KeyMouseReader.KeyPressed(Keys.Left)) velocity.X = -1f; //else velocity.X = 1f;
+            if (KeyMouseReader.KeyPressed(Keys.Right)) velocity.X = 2f;
+            else if (KeyMouseReader.KeyPressed(Keys.Left)) velocity.X = -2f; //else velocity.X = 0f;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
             {
@@ -46,13 +46,12 @@ namespace platformGame
                 velocity.Y += 0.15f * i;
             }
 
-            if (position.Y + tex.Height >= 450)
+            if (position.Y + tex.Height >= 440)
                 hasJumped = false;
 
             if (hasJumped == false)
                 velocity.Y = 0f;
-            
-            
+
             
 
         }

@@ -18,7 +18,7 @@ namespace platformGame
         List<Enemy> enemyList;
         Player player;
         Texture2D backgroundTex;
-        Platform platforms;
+        
 
         public Game1()
         {
@@ -84,10 +84,13 @@ namespace platformGame
                 Exit();
             KeyMouseReader.Update();
 
-           
+            
 
 
             player.Update(gameTime);
+
+            
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
