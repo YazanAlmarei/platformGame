@@ -23,7 +23,7 @@ namespace platformGame
         Texture2D backgroundTex;
         Texture2D winTex;
         Texture2D loseTex;
-
+        SpriteFont textFont;
 
         public enum GameState { Playing, Won, Lost }
         public GameState gameState;
@@ -54,8 +54,10 @@ namespace platformGame
             player = null;
 
             backgroundTex = Content.Load<Texture2D>("background");
-            loseTex = Content.Load<Texture2D>("lose2");
+            loseTex = Content.Load<Texture2D>("YouLose");
             winTex = Content.Load<Texture2D>("win2");
+
+            textFont = Content.Load<SpriteFont>("font");
 
             Assests.LoadTextures(Content);
 
@@ -177,11 +179,12 @@ namespace platformGame
 
                 case GameState.Won:
                     spriteBatch.Draw(winTex, Vector2.Zero, Color.White);
-
+                    spriteBatch.DrawString(textFont, "Press Escape To Exit", new Vector2(490, 420), Color.White);
                     break;
 
                 case GameState.Lost:
                     spriteBatch.Draw(loseTex, Vector2.Zero, Color.White);
+                    spriteBatch.DrawString(textFont, "Press Escape To Exit", new Vector2(490, 420), Color.Green);
 
                     break;
 
