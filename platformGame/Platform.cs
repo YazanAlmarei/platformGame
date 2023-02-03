@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using SharpDX.Direct3D9;
 
 namespace platformGame
 {
@@ -9,10 +10,20 @@ namespace platformGame
     {
 
         public Rectangle tileRect;
+        public Vector2 position;
         public Platform(Rectangle rect) : base(rect)
         {
             tex = Assests.platoformTex;
-            tileRect = new Rectangle (0 , 0, tex.Width, tex.Height);
+            
+            position = new Vector2(rect.X, rect.Y);
+            Update();
+            
+        }
+
+        public void Update()
+        {
+            tileRect = new Rectangle((int)(position.X), (int)(position.Y), tex.Width, tex.Height);
+
         }
 
 

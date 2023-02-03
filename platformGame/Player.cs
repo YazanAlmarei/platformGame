@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System.Windows.Forms;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
+using SharpDX.Direct3D9;
+using System.Collections.Generic;
 
 namespace platformGame
 {
@@ -13,7 +15,8 @@ namespace platformGame
         Vector2 position;
         public Vector2 velocity;
         public bool hasJumped;
-        
+        public Rectangle playerRec;
+      
 
         public Player (Rectangle rect) : base (rect)
         {
@@ -26,9 +29,11 @@ namespace platformGame
         
         
 
-        public void Update(GameTime gametTime)
+        public void Update(GameTime gametTime, List<Platform>platforms)
         {
-            position += velocity;
+            playerRec = new Rectangle((int)(position.X), (int)(position.Y), tex.Width, tex.Height);
+
+            
 
             if (KeyMouseReader.KeyPressed(Keys.Right)) velocity.X = 2f;
             else if (KeyMouseReader.KeyPressed(Keys.Left)) velocity.X = -2f; //else velocity.X = 0f;
@@ -46,13 +51,44 @@ namespace platformGame
                 velocity.Y += 0.15f * i;
             }
 
-            if (position.Y + tex.Height >= 440)
+            Vector2 newPos = (position + velocity);
+            Rectangle newRec = new Rectangle ((int)newPos.X, (int)newPos.Y, tex.Width, tex.Height);
+
+            bool hasCollided = false;
+
+
+
+            foreach (Platform p in platforms)
+            {
+                if (newRec.Intersects(p.tileRect))
+                {
+                    velocity = Vector2.Zero;
+                    hasJumped = false;
+                    hasCollided = true;
+                }
+
+
+
+            }
+            
+            if (hasCollided == true)
+            {
+                hasJumped = true;
+                velocity.Y = -5f;
+            }
+
+            position += velocity;
+
+            /*if (position.Y + tex.Height >= 440)
                 hasJumped = false;
 
             if (hasJumped == false)
-                velocity.Y = 0f;
+                velocity.Y = 0f;*/
 
-            
+
+
+
+
 
         }
 

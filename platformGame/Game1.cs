@@ -7,6 +7,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Taskbar;
+using System.Linq;
 
 namespace platformGame
 {
@@ -18,6 +19,7 @@ namespace platformGame
         List<Enemy> enemyList;
         Player player;
         Texture2D backgroundTex;
+        
         
 
         public Game1()
@@ -75,6 +77,8 @@ namespace platformGame
 
             }
 
+            
+
 
         }
 
@@ -84,11 +88,30 @@ namespace platformGame
                 Exit();
             KeyMouseReader.Update();
 
+            player.Update(gameTime, platfromList);
+
+            foreach (Enemy e in enemyList)
+            {
+
+                e.Update();
+                e.enemyRec.Intersects(player.playerRec);
+
+                if (e.enemyRec.Intersects(player.playerRec))
+                {
+                    int a = 1;
+                    
+
+                }
+
+            }
+
             
 
 
-            player.Update(gameTime);
+            
 
+            
+            
             
 
             // TODO: Add your update logic here

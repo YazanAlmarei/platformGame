@@ -11,18 +11,10 @@ namespace platformGame
         protected Rectangle size;
         protected Texture2D tex;
         
-       
-      
-
         public Rectangle Size
         {
             get { return size; }
         }
-
-        
-
-
-
 
         public GameObjects(Rectangle rect)
         {
