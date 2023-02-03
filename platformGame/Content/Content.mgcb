@@ -68,6 +68,11 @@
 /processorParam:TextureFormat=Compressed
 /build:font.spritefont
 
+#begin platform.json
+/importer:
+/processor:
+/build:platform.json
+
 #begin player.png
 /importer:TextureImporter
 /processor:TextureProcessor
