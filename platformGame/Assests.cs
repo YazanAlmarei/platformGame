@@ -15,6 +15,7 @@ namespace platformGame
             platoformTex = gd.Load<Texture2D>("floor");
             playerTex = gd.Load<Texture2D>("player");
             enemyTex = gd.Load<Texture2D>("enemy");
+
         }
     }
 }

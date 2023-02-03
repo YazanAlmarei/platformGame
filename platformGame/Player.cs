@@ -11,89 +11,92 @@ namespace platformGame
 {
     internal class Player : GameObjects
     {
-        
         Vector2 position;
         public Vector2 velocity;
-        public bool hasJumped;
+        public Vector2 gravity;
         public Rectangle playerRec;
-      
 
-        public Player (Rectangle rect) : base (rect)
+
+        public bool hasJumped = true;
+        public bool isFalling = true;
+
+        public Player(Rectangle rect) : base(rect)
         {
-            tex = Assests.playerTex;  
-            hasJumped = true;
+            tex = Assests.playerTex;
             velocity = new Vector2(0, 0);
-            position = new Vector2(rect.X, rect.Y);      
-
+            position = new Vector2(rect.X, rect.Y);
+            gravity = new Vector2(0, 1f);
         }
-        
-        
 
-        public void Update(GameTime gametTime, List<Platform>platforms)
+        public void Update(GameTime gameTime, List<Platform> platforms)
         {
             playerRec = new Rectangle((int)(position.X), (int)(position.Y), tex.Width, tex.Height);
 
-            
-
-            if (KeyMouseReader.KeyPressed(Keys.Right)) velocity.X = 2f;
-            else if (KeyMouseReader.KeyPressed(Keys.Left)) velocity.X = -2f; //else velocity.X = 0f;
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
+            if (KeyMouseReader.KeyPressed(Keys.Right))
             {
-                position.Y -= 10f;
-                velocity.Y = -5f;
+                velocity.X = 4f;
+            }
+            else if (KeyMouseReader.KeyPressed(Keys.Left))
+            {
+                velocity.X = -4f;
+            }
+
+            if (KeyMouseReader.KeyPressed(Keys.Space) && !hasJumped && !isFalling)
+            {
+                velocity.Y = -12f;
                 hasJumped = true;
+                isFalling = true;
             }
 
-            if (hasJumped == true)
+            if (isFalling)
             {
-                float i = 1;
-                velocity.Y += 0.15f * i;
+                velocity += gravity * 0.5f;
             }
 
-            Vector2 newPos = (position + velocity);
-            Rectangle newRec = new Rectangle ((int)newPos.X, (int)newPos.Y, tex.Width, tex.Height);
+            Vector2 newPos = position + velocity + gravity;
+            Rectangle newRec = new Rectangle((int)(newPos.X), (int)(newPos.Y), tex.Width, tex.Height);
 
-            bool hasCollided = false;
+            float newXPos = UpdateXComponent(newRec, platforms);
+            float newYPos = UpdateYComponent(newRec, platforms);
 
+            position = new Vector2(newXPos, newYPos);
+        }
 
-
+        public float UpdateXComponent(Rectangle newRec, List<Platform> platforms)
+        {
+            // Fix the X coordinate collision
             foreach (Platform p in platforms)
             {
                 if (newRec.Intersects(p.tileRect))
                 {
-                    velocity = Vector2.Zero;
-                    hasJumped = false;
-                    hasCollided = true;
+                    return position.X;
                 }
-
-
-
             }
-            
-            if (hasCollided == true)
+
+            return newRec.X;
+        }
+
+        public float UpdateYComponent(Rectangle newRec, List<Platform> platforms)
+        {
+            // Y component collision
+            foreach (Platform p in platforms)
             {
-                hasJumped = true;
-                velocity.Y = -5f;
+                if (newRec.Intersects(p.tileRect))
+                {
+                    isFalling = false;
+                    hasJumped = false;
+                    velocity.Y = 0;
+                    return p.tileRect.Y - p.tileRect.Height - gravity.Y;
+                }
             }
 
-            position += velocity;
+            isFalling = true;
 
-            /*if (position.Y + tex.Height >= 440)
-                hasJumped = false;
-
-            if (hasJumped == false)
-                velocity.Y = 0f;*/
-
-
-
-
-
-
+            return newRec.Y;
         }
 
 
-        public override void Draw (SpriteBatch sb)
+        public override void Draw(SpriteBatch sb)
         {
 
             sb.Draw(tex, position, Color.White);

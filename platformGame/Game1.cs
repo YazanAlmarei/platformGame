@@ -27,8 +27,8 @@ namespace platformGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            graphics.PreferredBackBufferHeight = 460;
-            graphics.PreferredBackBufferWidth = 600;
+            graphics.PreferredBackBufferHeight = 660;
+            graphics.PreferredBackBufferWidth = 1200;
 
         }
 
@@ -104,15 +104,6 @@ namespace platformGame
                 }
 
             }
-
-            
-
-
-            
-
-            
-            
-            
 
             // TODO: Add your update logic here
 
